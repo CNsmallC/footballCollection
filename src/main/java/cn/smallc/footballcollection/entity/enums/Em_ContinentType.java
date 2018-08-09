@@ -1,6 +1,6 @@
 package cn.smallc.footballcollection.entity.enums;
 
-public enum Em_ContinentType {
+public enum Em_ContinentType{
     Europe("欧洲"),
     South_America("南美洲"),
     Africa("非洲"),
