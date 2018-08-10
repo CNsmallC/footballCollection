@@ -6,7 +6,7 @@ public class Score implements IAggregateRoot {
 
     private int ID;
     private String playtype;
-    private String scoretype;
+//    private String scoretype;
     private double odds;
     private Match matchID;
 
@@ -26,13 +26,13 @@ public class Score implements IAggregateRoot {
         this.playtype = playtype;
     }
 
-    public String getScoretype() {
-        return scoretype;
-    }
-
-    public void setScoretype(String scoretype) {
-        this.scoretype = scoretype;
-    }
+//    public String getScoretype() {
+//        return scoretype;
+//    }
+//
+//    public void setScoretype(String scoretype) {
+//        this.scoretype = scoretype;
+//    }
 
     public double getOdds() {
         return odds;

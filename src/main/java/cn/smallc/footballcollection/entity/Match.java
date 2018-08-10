@@ -7,12 +7,59 @@ import java.util.Date;
 public class Match  implements IAggregateRoot {
 
     private int ID;
-    private int homeTeamID;
-    private int awayTeamID;
-    private int leagueTypeID;
+    private LeagueType leagueType;
     private Date matchTime;
     private int todayMatchID;
     private boolean isHot;
+    private String matchCode;
+
+    //比赛队伍
+    private Team homeTeam;
+    private Team awayTeam;
+
+    //比分
+    private Score score;
+
+
+    public LeagueType getLeagueType() {
+        return leagueType;
+    }
+
+    public void setLeagueType(LeagueType leagueType) {
+        this.leagueType = leagueType;
+    }
+
+    public String getMatchCode() {
+        return matchCode;
+    }
+
+    public void setMatchCode(String matchCode) {
+        this.matchCode = matchCode;
+    }
+
+    public Team getHomeTeam() {
+        return homeTeam;
+    }
+
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+
+    public Team getAwayTeam() {
+        return awayTeam;
+    }
+
+    public void setAwayTeam(Team awayTeam) {
+        this.awayTeam = awayTeam;
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
 
     public int getID() {
         return ID;
@@ -20,30 +67,6 @@ public class Match  implements IAggregateRoot {
 
     public void setID(int ID) {
         this.ID = ID;
-    }
-
-    public int getHomeTeamID() {
-        return homeTeamID;
-    }
-
-    public void setHomeTeamID(int homeTeamID) {
-        this.homeTeamID = homeTeamID;
-    }
-
-    public int getAwayTeamID() {
-        return awayTeamID;
-    }
-
-    public void setAwayTeamID(int awayTeamID) {
-        this.awayTeamID = awayTeamID;
-    }
-
-    public int getLeagueTypeID() {
-        return leagueTypeID;
-    }
-
-    public void setLeagueTypeID(int leagueTypeID) {
-        this.leagueTypeID = leagueTypeID;
     }
 
     public Date getMatchTime() {
