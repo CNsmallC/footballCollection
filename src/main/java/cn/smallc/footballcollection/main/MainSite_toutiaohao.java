@@ -198,7 +198,6 @@ public class MainSite_toutiaohao {
                         //入库page和img
                         for (Page page : urlPages) {
                             SharedRepositoryFactory.getPageRepository().insert(page);
-                            SharedRepositoryFactory.getImgRepository().batchInsert(page.getIMG());
                         }
                     }
 

@@ -1,7 +1,8 @@
 package cn.smallc.footballcollection.support;
 
-import cn.smallc.footballcollection.repository.AccountRepository;
-import cn.smallc.footballcollection.repository.page.IMGRepository;
+import cn.smallc.footballcollection.repository.LeagueTypeRepository;
+import cn.smallc.footballcollection.repository.MatchRepository;
+import cn.smallc.footballcollection.repository.TeamRepository;
 import cn.smallc.footballcollection.repository.page.PageRepository;
 import cn.smallc.footballcollection.repository.visited.VisitedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,32 +12,64 @@ import org.springframework.stereotype.Component;
 public class SharedRepositoryFactory {
 
     /**
-     * 账号仓储
-     */
-    public static AccountRepository accountRepository;
-
-    /**
      * 页面仓储
      */
     private static PageRepository pageRepository;
 
     /**
-     * 历史访问仓储
+     * 联赛分类仓储
+     */
+    private static LeagueTypeRepository leagueTypeRepository;
+
+    /**
+     * 联赛分类仓储
+     */
+    private static MatchRepository matchRepository;
+
+    /**
+     * 去重仓储
      */
     private static VisitedRepository visitedRepository;
 
     /**
-     * 图片仓储
+     * 联赛分类仓储
      */
-    private static IMGRepository imgRepository;
+    private static TeamRepository teamRepository;
 
-    public static IMGRepository getImgRepository() {
-        return imgRepository;
+    public static VisitedRepository getVisitedRepository() {
+        return visitedRepository;
     }
 
     @Autowired
-    public void setImgRepository(IMGRepository imgRepository) {
-        SharedRepositoryFactory.imgRepository = imgRepository;
+    public void setVisitedRepository(VisitedRepository visitedRepository) {
+        SharedRepositoryFactory.visitedRepository = visitedRepository;
+    }
+
+    public static LeagueTypeRepository getLeagueTypeRepository() {
+        return leagueTypeRepository;
+    }
+
+    @Autowired
+    public void setLeagueTypeRepository(LeagueTypeRepository leagueTypeRepository) {
+        SharedRepositoryFactory.leagueTypeRepository = leagueTypeRepository;
+    }
+
+    public static MatchRepository getMatchRepository() {
+        return matchRepository;
+    }
+
+    @Autowired
+    public void setMatchRepository(MatchRepository matchRepository) {
+        SharedRepositoryFactory.matchRepository = matchRepository;
+    }
+
+    public static TeamRepository getTeamRepository() {
+        return teamRepository;
+    }
+
+    @Autowired
+    public void setTeamRepository(TeamRepository teamRepository) {
+        SharedRepositoryFactory.teamRepository = teamRepository;
     }
 
     public static PageRepository getPageRepository() {
@@ -48,21 +81,4 @@ public class SharedRepositoryFactory {
         SharedRepositoryFactory.pageRepository = pageRepository;
     }
 
-    public static VisitedRepository getVisitedRepository() {
-        return visitedRepository;
-    }
-
-    @Autowired
-    public void setVisitedRepository(VisitedRepository visitedRepository) {
-        SharedRepositoryFactory.visitedRepository = visitedRepository;
-    }
-
-    public static AccountRepository getAccountRepository() {
-        return accountRepository;
-    }
-
-    @Autowired
-    public void setAccountRepository(AccountRepository accountRepository) {
-        SharedRepositoryFactory.accountRepository = accountRepository;
-    }
 }

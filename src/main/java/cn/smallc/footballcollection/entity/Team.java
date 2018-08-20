@@ -10,16 +10,17 @@ public class Team implements IAggregateRoot {
     private String teamName_E;
     //缩写名
     private String nickName;
-    private Country country;
+    private String countryName;
     private Em_TeamType teamType;
-    private int leagueTypeID;
+    private LeagueType leagueType;
 
-    public int getLeagueTypeID() {
-        return leagueTypeID;
+
+    public LeagueType getLeagueType() {
+        return leagueType;
     }
 
-    public void setLeagueTypeID(int leagueTypeID) {
-        this.leagueTypeID = leagueTypeID;
+    public void setLeagueType(LeagueType leagueType) {
+        this.leagueType = leagueType;
     }
 
     public int getID() {
@@ -54,12 +55,12 @@ public class Team implements IAggregateRoot {
         this.nickName = nickName;
     }
 
-    public Country getCountry() {
-        return country;
+    public String getCountryName() {
+        return countryName;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     public Em_TeamType getTeamType() {

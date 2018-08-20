@@ -1,5 +1,6 @@
 package cn.smallc.footballcollection;
 
+import cn.smallc.footballcollection.main.Test;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +14,10 @@ public class FootballCollectionApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("run");
+		Test.addTeam("E:\\smallC\\workspace\\footballCollection\\src\\main\\resources\\Test.txt");
+
+
+//		System.out.println("run");
 	}
 
 }

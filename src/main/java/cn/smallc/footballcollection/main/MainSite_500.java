@@ -133,7 +133,7 @@ public class MainSite_500 {
 
                 } catch (Exception e) {
                     //中间出错,将去重表数据删除
-                    SharedRepositoryFactory.getVisitedRepository().removeByUrlAndTitle(new Visited(url.getUrl(),url.getTitle()));
+//                    SharedRepositoryFactory.getVisitedRepository().removeByUrlAndTitle(new Visited(url.getUrl(),url.getTitle()));
                     e.printStackTrace();
                     logger.fatal(getFatalLogString(Page_one));
                 }
@@ -166,7 +166,6 @@ public class MainSite_500 {
                         //入库page和img
                         for (Page page : urlPages) {
                             SharedRepositoryFactory.getPageRepository().insert(page);
-                            SharedRepositoryFactory.getImgRepository().batchInsert(page.getIMG());
                         }
                     }
 

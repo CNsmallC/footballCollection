@@ -15,13 +15,13 @@ import java.util.stream.Stream;
 public class Tag_500 {
 
     public static void main(String[] args) throws Exception {
-        checkOnePage("http://trade.500.com/jczq/index.php?playid=312");
+        checkOnePage("http://trade.500.com/jczq/index.php");
     }
     private static void checkOnePage(String url) {
         Document doc = GetDoc.getdoc4Chrome(url, 3000, 0, 2);
 
         //表格所有内容行
-        Elements tableElement = doc.select("[id = d_星期五 201]").select("tr");
+        Elements tableElement = doc.select("[id = d_星期一 201]").select("tr");
 
 //        tableElement.get(0);
 
