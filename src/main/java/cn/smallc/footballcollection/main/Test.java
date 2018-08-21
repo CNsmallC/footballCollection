@@ -31,7 +31,7 @@ public class Test {
             team.setTeamName_E(s[1]);
             team.setNickName(s[2]);
             team.setCountryName(s[3]);
-            LeagueType lt = SharedRepositoryFactory.getLeagueTypeRepository().getByNickName(Em_LeagueType.Ligue_1.getValue());
+            LeagueType lt = SharedRepositoryFactory.getLeagueTypeRepository().getByNickName(Em_LeagueType.La_Liga.getValue());
             team.setLeagueType(lt);
             team.setTeamType(Em_TeamType.CLUB);
 

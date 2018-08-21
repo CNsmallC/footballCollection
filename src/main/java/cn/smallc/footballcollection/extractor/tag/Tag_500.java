@@ -10,7 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Tag_500 {
 
@@ -21,7 +20,7 @@ public class Tag_500 {
         Document doc = GetDoc.getdoc4Chrome(url, 3000, 0, 2);
 
         //表格所有内容行
-        Elements tableElement = doc.select("[id = d_星期一 201]").select("tr");
+        Elements tableElement = doc.select("[id = d_星期二 201]").select("tr");
 
 //        tableElement.get(0);
 

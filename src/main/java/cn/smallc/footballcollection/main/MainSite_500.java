@@ -38,7 +38,7 @@ public class MainSite_500 {
 //        String logType=args[4];
 
         System.setProperty("log4j2Filename", urlfrom +"_"+logType+"_log");
-        Logger logger = LogManager.getLogger(MainSite_toutiaohao.class);
+        Logger logger = LogManager.getLogger(MainSite_500.class);
 
         boolean loopflag = true;
 

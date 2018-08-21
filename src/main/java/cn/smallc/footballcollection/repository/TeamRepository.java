@@ -14,7 +14,9 @@ public class TeamRepository extends Repository<Team,ITeamRepository> {
 
     @Transactional
     public void insertTeam(Team team) {
-        int teamID = repository.insertTeam(team);
+        repository.insertTeam(team);
+
+        int teamID = team.getID();
 
         Map<String,Integer> parameter = new HashMap<>();
         parameter.put("teamID",teamID);

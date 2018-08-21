@@ -2,7 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.smallc.footballcollection.repository.ITeamRepository">
 
-    <insert id="insertTeam" parameterType="Team" keyProperty="ID">
+    <insert id="insertTeam" parameterType="Team">
+        <selectKey resultType="Integer" order="AFTER" keyProperty="ID">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
         INSERT INTO tb_team (teamName_C,teamName_E,nickName,countryName,teamType)
         VALUES (#{teamName_C},#{teamName_E},#{nickName},#{countryName},#{teamType});
     </insert>
@@ -13,5 +16,10 @@
 
     </insert>
 
+    <select id="findByTeamName_C" parameterType="String" resultType="">
+
+    </select>
+    
+    
 
 </mapper>
