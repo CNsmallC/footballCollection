@@ -9,5 +9,7 @@ public interface ILeagueTypeRepository extends IRepository<LeagueType>{
 
     LeagueType getByNickName(String nickName);
 
+    LeagueType getByLeagueName(String leagueName);
+
 
 }

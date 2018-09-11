@@ -8,6 +8,15 @@ public class LeagueType implements IAggregateRoot {
     private String leagueName;
     private String nickName;
 
+    public static LeagueType init(String leagueName,String nickName){
+        LeagueType leagueType = new LeagueType();
+
+        leagueType.setLeagueName(leagueName);
+        leagueType.setNickName(nickName);
+
+        return leagueType;
+    }
+
     public String getNickName() {
         return nickName;
     }
@@ -30,5 +39,10 @@ public class LeagueType implements IAggregateRoot {
 
     public void setLeagueName(String leagueName) {
         this.leagueName = leagueName;
+    }
+
+    @Override
+    public String toString() {
+        return this.getLeagueName() + " "+ this.getNickName();
     }
 }

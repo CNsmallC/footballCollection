@@ -15,6 +15,7 @@ public class Tag_500 {
 
     public static void main(String[] args) throws Exception {
         checkOnePage("http://trade.500.com/jczq/index.php");
+
     }
     private static void checkOnePage(String url) {
         Document doc = GetDoc.getdoc4Chrome(url, 3000, 0, 2);
@@ -53,7 +54,7 @@ public class Tag_500 {
                 System.out.println(s.select(".league").text());
 
 
-                System.out.println(sdf.parse(s.attr("pendtime")));
+//                System.out.println(sdf.parse(s.attr("pendtime")));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

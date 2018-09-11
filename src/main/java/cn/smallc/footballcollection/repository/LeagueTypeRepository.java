@@ -11,4 +11,8 @@ public class LeagueTypeRepository extends Repository<LeagueType,ILeagueTypeRepos
         return repository.getByNickName(nickName);
     }
 
+    public LeagueType getByLeagueName(String leagueName){
+        return  repository.getByLeagueName(leagueName);
+    }
+
 }

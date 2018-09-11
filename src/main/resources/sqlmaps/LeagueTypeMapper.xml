@@ -6,5 +6,16 @@
         SELECT * FROM tb_leaguetype WHERE nickName = #{value}
     </select>
 
+    <select id="getByLeagueName" parameterType="String" resultType="LeagueType">
+        SELECT * FROM tb_leaguetype WHERE leagueName = #{value}
+    </select>
+
+    <insert id="batchInsert" parameterType="list">
+        INSERT INTO tb_leaguetype (leagueName,nickName)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.leagueName},#{item.nickName})
+        </foreach>
+    </insert>
 
 </mapper>

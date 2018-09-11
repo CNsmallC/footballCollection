@@ -14,7 +14,8 @@ public class FootballCollectionApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Test.addTeam("E:\\smallC\\workspace\\footballCollection\\src\\main\\resources\\Test.txt");
+//		Test.addTeam("E:\\smallC\\workspace\\footballCollection\\src\\main\\resources\\Test.txt");
+
 
 
 //		System.out.println("run");
