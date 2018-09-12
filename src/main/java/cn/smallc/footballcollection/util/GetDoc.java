@@ -114,7 +114,9 @@ public class GetDoc {
 				if (waittime > 0) {
 					Thread.sleep(waittime);
 				}
-				
+
+
+
 				Doc =	Jsoup.connect(url)
 	//					.userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36")
 				.header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36")

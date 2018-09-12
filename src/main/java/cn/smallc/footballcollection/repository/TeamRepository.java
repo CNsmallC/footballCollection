@@ -19,10 +19,16 @@ public class TeamRepository extends Repository<Team,ITeamRepository> {
         int teamID = team.getID();
 
         Map<String,Integer> parameter = new HashMap<>();
-        parameter.put("teamID",teamID);
-        parameter.put("leagueID",team.getLeagueType().getID());
+//        parameter.put("teamID",teamID);
+//        parameter.put("leagueID",team.getLeagueType().getID());
 
-        repository.insertLeagueTypeRelation(parameter);
+//        repository.insertLeagueTypeRelation(parameter);
 
+        System.out.println("返回插入ID"+teamID);
     }
+
+    public Team findByTeamName_C(String teamName_C){
+        return repository.findByTeamName_C(teamName_C);
+    }
+
 }

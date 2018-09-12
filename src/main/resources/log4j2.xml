@@ -3,19 +3,11 @@
 <configuration status="OFF">
 	<!-- 定义下面的引用名 -->
 	<Properties>
-		<!-- <property name="log_pattern"> %d %-5p [%c] %m%n</property> <property 
+		<!-- <property name="log_pattern"> %d %-5p [%c] %m%n</property> <property
 			name="log_pattern_info">%m%n</property> -->
 		<!-- <property name="log4j2Filename"></property> -->
-		<property name="basePath">/data/mycrawlerruntimelogs/</property>
-		<!--<property name="basePath">d:/</property>  -->
-		<property name="MainSiteV2_fatal">${basePath}/${sys:log4j2Filename}_fatal.log
-		</property>
-		<property name="rollingfile_MainSiteV2_fatal">${basePath}/${sys:log4j2Filename}%d{yyyy-MM-dd}_fatal.log
-		</property>
-		<property name="MainSiteV2_info">${basePath}/${sys:log4j2Filename}_info.log
-		</property>
-		<property name="rollingfile_MainSiteV2_info">${basePath}/${sys:log4j2Filename}%d{yyyy-MM-dd}_info.log
-		</property>
+		<!--<property name="basePath">/data/mycrawlerruntimelogs/</property>-->
+		<property name="basePath">d:/log/</property>
 
 		<property name="MainSiteV3_fatal">${basePath}/${sys:log4j2Filename}_fatal.log
 		</property>
@@ -41,34 +33,10 @@
 		<!--打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
 		<!-- 按月生成归档日志，可以使用 filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log" -->
 
-		<RollingFile name="rollingfile_MainSiteV2_fatal" filename="${MainSiteV2_fatal}"
-			filePattern="${rollingfile_MainSiteV2_fatal}" append="true">
-			<ThresholdFilter level="fatal" onMatch="ACCEPT"
-				onMismatch="DENY" />
-			<Policies>
-				<TimeBasedTriggeringPolicy />
-			</Policies>
-		</RollingFile>
-
-
-		<RollingFile name="rollingfile_MainSiteV2_info" filename="${MainSiteV2_info}"
-			filePattern="${rollingfile_MainSiteV2_info}" append="true">
-			<Filters>
-				<ThresholdFilter level="warn" onMatch="DENY"
-					onMismatch="NEUTRAL" />
-				<ThresholdFilter level="info" onMatch="ACCEPT"
-					onMismatch="DENY" />
-			</Filters>
-			<Policies>
-				<TimeBasedTriggeringPolicy />
-			</Policies>
-		</RollingFile>
-
-
 		<RollingFile name="rollingfile_MainSiteV3_fatal" filename="${MainSiteV3_fatal}"
-			filePattern="${rollingfile_MainSiteV3_fatal}" append="true">
+					 filePattern="${rollingfile_MainSiteV3_fatal}" append="true">
 			<ThresholdFilter level="fatal" onMatch="ACCEPT"
-				onMismatch="DENY" />
+							 onMismatch="DENY" />
 			<Policies>
 				<TimeBasedTriggeringPolicy />
 			</Policies>
@@ -76,12 +44,12 @@
 
 
 		<RollingFile name="rollingfile_MainSiteV3_info" filename="${MainSiteV3_info}"
-			filePattern="${rollingfile_MainSiteV3_info}" append="true">
+					 filePattern="${rollingfile_MainSiteV3_info}" append="true">
 			<Filters>
 				<ThresholdFilter level="warn" onMatch="DENY"
-					onMismatch="NEUTRAL" />
+								 onMismatch="NEUTRAL" />
 				<ThresholdFilter level="info" onMatch="ACCEPT"
-					onMismatch="DENY" />
+								 onMismatch="DENY" />
 			</Filters>
 			<Policies>
 				<TimeBasedTriggeringPolicy />
@@ -89,12 +57,12 @@
 		</RollingFile>
 
 		<RollingFile name="rollingfile_MainSiteV3_debug" filename="${MainSiteV3_debug}"
-			filePattern="${rollingfile_MainSiteV3_debug}" append="true">
+					 filePattern="${rollingfile_MainSiteV3_debug}" append="true">
 			<Filters>
 				<ThresholdFilter level="info" onMatch="DENY"
-					onMismatch="NEUTRAL" />
+								 onMismatch="NEUTRAL" />
 				<ThresholdFilter level="debug" onMatch="ACCEPT"
-					onMismatch="NEUTRAL" />
+								 onMismatch="NEUTRAL" />
 			</Filters>
 			<Policies>
 				<TimeBasedTriggeringPolicy />
@@ -103,9 +71,9 @@
 
 
 		<File name="extractor_error" filename="${extractor_error_file}"
-			append="true">
+			  append="true">
 			<ThresholdFilter level="info" onMatch="ACCEPT"
-				onMismatch="DENY" />
+							 onMismatch="DENY" />
 		</File>
 
 	</appenders>
@@ -113,12 +81,27 @@
 	<loggers>
 
 		<!-- 根据类名MainSite_500进行输出，注意修改类名 -->
-		<AsyncLogger name="cn.smallc.footballcollection.main.MainSite_500"
-			additivity="false" level="ALL">
+		<!--<AsyncLogger name="cn.smallc.footballcollection.main.MainSite_500"-->
+					 <!--additivity="false" level="ALL">-->
+			<!--<AppenderRef ref="rollingfile_MainSiteV3_fatal" level="fatal" />-->
+			<!--<AppenderRef ref="rollingfile_MainSiteV3_info" level="info" />-->
+			<!--<AppenderRef ref="rollingfile_MainSiteV3_debug" level="debug" />-->
+		<!--</AsyncLogger>-->
+
+		<!-- 根据类名MainSite_500进行输出，注意修改类名 -->
+		<logger name="cn.smallc.footballcollection.extractor.tag.TeamDeal"
+					 additivity="false" level="ALL">
 			<AppenderRef ref="rollingfile_MainSiteV3_fatal" level="fatal" />
 			<AppenderRef ref="rollingfile_MainSiteV3_info" level="info" />
 			<AppenderRef ref="rollingfile_MainSiteV3_debug" level="debug" />
-		</AsyncLogger>
+		</logger>
+
+		<logger name="cn.smallc.footballcollection.FootballCollectionApplication"
+					 additivity="false" level="ALL">
+			<AppenderRef ref="rollingfile_MainSiteV3_fatal" level="fatal" />
+			<AppenderRef ref="rollingfile_MainSiteV3_info" level="info" />
+			<AppenderRef ref="rollingfile_MainSiteV3_debug" level="debug" />
+		</logger>
 
 
 	</loggers>

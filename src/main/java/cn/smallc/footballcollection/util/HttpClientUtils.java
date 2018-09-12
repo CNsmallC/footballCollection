@@ -463,20 +463,20 @@ public class HttpClientUtils {
             RequestConfig requestConfig = RequestConfig.copy(
                     defaultRequestConfig).build();
             httpget.setConfig(requestConfig);
-            System.out.println("executing request " + httpget.getURI());
+//            System.out.println("executing request " + httpget.getURI());
             // 执行get请求.
             CloseableHttpResponse response = httpclient.execute(httpget);
             try {
                 // 获取响应实体
                 HttpEntity entity = response.getEntity();
-                System.out.println("--------------------------------------");
+//                System.out.println("--------------------------------------");
                 // 打印响应状态
-                System.out.println(response.getStatusLine());
-                statusCode = response.getStatusLine().getStatusCode();
+//                System.out.println(response.getStatusLine());
+//                statusCode = response.getStatusLine().getStatusCode();
                 if (entity != null) {
                     // 打印响应内容长度
-                    System.out.println("Response content length: "
-                            + entity.getContentLength());
+//                    System.out.println("Response content length: "
+//                            + entity.getContentLength());
 
                     // charset处理
                     String charset = getContentCharSet(entity);
@@ -494,9 +494,9 @@ public class HttpClientUtils {
                         }
                         htmlString = new String(bytes, charset);
                     }
-                    System.out.println("charset:" + charset);
+//                    System.out.println("charset:" + charset);
                 }
-                System.out.println("------------------------------------");
+//                System.out.println("------------------------------------");
             } finally {
                 response.close();
             }

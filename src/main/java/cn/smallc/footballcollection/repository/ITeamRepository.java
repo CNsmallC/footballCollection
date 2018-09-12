@@ -14,4 +14,6 @@ public interface ITeamRepository extends IRepository<Team>{
 
     void insertLeagueTypeRelation(Map<String,Integer> map);
 
+    Team findByTeamName_C(String teamName_C);
+
 }

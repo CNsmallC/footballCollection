@@ -6,9 +6,20 @@
         <selectKey resultType="Integer" order="AFTER" keyProperty="ID">
             SELECT LAST_INSERT_ID();
         </selectKey>
-        INSERT INTO tb_team (teamName_C,teamName_E,nickName,countryName,teamType)
-        VALUES (#{teamName_C},#{teamName_E},#{nickName},#{countryName},#{teamType});
+        INSERT INTO tb_team (teamName_C,teamName_E,nickName_C,nickName_E,countryName,teamType)
+        VALUES (#{teamName_C},#{teamName_E},#{nickName_C},#{nickName_E},#{countryName},#{teamType});
     </insert>
+
+    <select id="findByTeamName_C" parameterType="String" resultType="Team">
+        SELECT * FROM tb_team WHERE teamName_C = #{teamName_C}
+    </select>
+
+    <update id="update" parameterType="Team">
+        UPDATE tb_team SET
+        teamName_C = #{teamName_C},teamName_E=#{teamName_E},nickName_C=#{nickName_C},nickName_E=#{nickName_E},countryName=#{countryName},teamType=#{teamType}
+        WHERE ID = #{ID}
+    </update>
+
 
     <insert id="insertLeagueTypeRelation" parameterType="HashMap">
         INSERT INTO re_league_team (teamID,leagueID)
@@ -16,9 +27,9 @@
 
     </insert>
 
-    <select id="findByTeamName_C" parameterType="String" resultType="">
+    <!--<select id="findByTeamName_C" parameterType="String" resultType="">-->
 
-    </select>
+    <!--</select>-->
     
     
 

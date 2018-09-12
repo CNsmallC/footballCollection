@@ -3,7 +3,7 @@
 <mapper namespace="cn.smallc.footballcollection.repository.ILeagueTypeRepository">
 
     <select id="getByNickName" parameterType="String" resultType="LeagueType">
-        SELECT * FROM tb_leaguetype WHERE nickName = #{value}
+        SELECT * FROM tb_leaguetype WHERE nickName_E = #{value}
     </select>
 
     <select id="getByLeagueName" parameterType="String" resultType="LeagueType">
@@ -11,10 +11,10 @@
     </select>
 
     <insert id="batchInsert" parameterType="list">
-        INSERT INTO tb_leaguetype (leagueName,nickName)
+        INSERT INTO tb_leaguetype (leagueName,nickName_E)
         VALUES
         <foreach collection="list" item="item" separator=",">
-            (#{item.leagueName},#{item.nickName})
+            (#{item.leagueName},#{item.nickName_E})
         </foreach>
     </insert>
 

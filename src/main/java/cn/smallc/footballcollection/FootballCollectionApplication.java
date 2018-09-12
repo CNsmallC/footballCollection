@@ -1,5 +1,6 @@
 package cn.smallc.footballcollection;
 
+import cn.smallc.footballcollection.extractor.tag.TeamDeal;
 import cn.smallc.footballcollection.main.Test;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FootballCollectionApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
+		System.setProperty("log4j2Filename","notInsertTeamIndex_log");
+
 		SpringApplication.run(FootballCollectionApplication.class, args);
 	}
 
@@ -16,7 +19,7 @@ public class FootballCollectionApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 //		Test.addTeam("E:\\smallC\\workspace\\footballCollection\\src\\main\\resources\\Test.txt");
 
-
+		TeamDeal.main(args);
 
 //		System.out.println("run");
 	}

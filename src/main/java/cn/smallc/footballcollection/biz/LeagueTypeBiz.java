@@ -10,6 +10,7 @@ import cn.smallc.footballcollection.support.SharedRepositoryFactory;
  */
 public class LeagueTypeBiz {
 
+//    true 表示通过,没有,可以添加
     public static boolean leagueTypeRepeatByNickName(String nickName){
 
         LeagueType dataBaseLeaueType = SharedRepositoryFactory.getLeagueTypeRepository().getByNickName(nickName);
