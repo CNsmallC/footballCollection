@@ -3,7 +3,7 @@
 <mapper namespace="cn.smallc.footballcollection.repository.ILeagueTypeRepository">
 
     <select id="getByNickName" parameterType="String" resultType="LeagueType">
-        SELECT * FROM tb_leaguetype WHERE nickName_E = #{value}
+        SELECT * FROM tb_leaguetype WHERE nickName = #{value}
     </select>
 
     <select id="getByLeagueName" parameterType="String" resultType="LeagueType">

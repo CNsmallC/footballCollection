@@ -103,6 +103,13 @@
 			<AppenderRef ref="rollingfile_MainSiteV3_debug" level="debug" />
 		</logger>
 
+		<logger name="cn.smallc.footballcollection.extractor.tag.Insert_CrawlerDeal_500MixMatch"
+					 additivity="false" level="ALL">
+			<AppenderRef ref="rollingfile_MainSiteV3_fatal" level="fatal" />
+			<AppenderRef ref="rollingfile_MainSiteV3_info" level="info" />
+			<AppenderRef ref="rollingfile_MainSiteV3_debug" level="debug" />
+		</logger>
+
 
 	</loggers>
 </configuration>

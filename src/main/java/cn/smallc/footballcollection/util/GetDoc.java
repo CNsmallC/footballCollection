@@ -2,10 +2,13 @@ package cn.smallc.footballcollection.util;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -141,6 +144,57 @@ public class GetDoc {
 		}
 		return Doc;
 	}
+
+
+	//2018年9月13日11:27:16 新增测试方法
+	public Document getDocByJsoup(String href){
+
+//		String ip = "221.237.155.64";
+		String ip = "122.96.93.158";
+
+//		int port = 9797;
+		int port = 49435;
+
+		Document doc = null;
+		try {
+
+			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ip, port));
+
+
+
+			URL url = new URL(null,href,new sun.net.www.protocol.https.Handler());
+
+			HttpsURLConnection urlcon = (HttpsURLConnection)url.openConnection(proxy);
+
+			urlcon.connect();         //获取连接
+
+			InputStream is = urlcon.getInputStream();
+
+			BufferedReader buffer = new BufferedReader(new InputStreamReader(is,"gb2312"));
+
+			StringBuffer bs = new StringBuffer();
+
+			String l = null;
+
+			while((l=buffer.readLine())!=null){
+
+				bs.append(l);
+
+			}
+
+			System.out.println(bs.toString());
+
+			doc = Jsoup.parse(bs.toString());
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return doc;
+
+	}
+
 	
 	public static Document getdoc(String url, int waittime,
                                   int retrytime) {

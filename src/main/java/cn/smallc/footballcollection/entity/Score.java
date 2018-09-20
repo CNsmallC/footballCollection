@@ -1,13 +1,15 @@
 package cn.smallc.footballcollection.entity;
 
 import cn.smallc.footballcollection.common.ientity.IAggregateRoot;
+import cn.smallc.footballcollection.entity.enums.Em_PlayType;
 
 public class Score implements IAggregateRoot {
 
     private int ID;
-    private String playtype;
-//    private String scoretype;
-    private double odds;
+//  不同玩法
+    private Em_PlayType playType;
+//    比分和赔率的特殊字符串  比分|赔率,比分|赔率...
+    private String score_Odds;
     private Match matchID;
 
     public int getID() {
@@ -18,28 +20,20 @@ public class Score implements IAggregateRoot {
         this.ID = ID;
     }
 
-    public String getPlaytype() {
-        return playtype;
+    public Em_PlayType getPlayType() {
+        return playType;
     }
 
-    public void setPlaytype(String playtype) {
-        this.playtype = playtype;
+    public void setPlayType(Em_PlayType playType) {
+        this.playType = playType;
     }
 
-//    public String getScoretype() {
-//        return scoretype;
-//    }
-//
-//    public void setScoretype(String scoretype) {
-//        this.scoretype = scoretype;
-//    }
-
-    public double getOdds() {
-        return odds;
+    public String getScore_Odds() {
+        return score_Odds;
     }
 
-    public void setOdds(double odds) {
-        this.odds = odds;
+    public void setScore_Odds(String score_Odds) {
+        this.score_Odds = score_Odds;
     }
 
     public Match getMatchID() {

@@ -1,5 +1,6 @@
 package cn.smallc.footballcollection;
 
+import cn.smallc.footballcollection.extractor.tag.Insert_CrawlerDeal_500MixMatch_New;
 import cn.smallc.footballcollection.extractor.tag.TeamDeal;
 import cn.smallc.footballcollection.main.Test;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +20,9 @@ public class FootballCollectionApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 //		Test.addTeam("E:\\smallC\\workspace\\footballCollection\\src\\main\\resources\\Test.txt");
 
-		TeamDeal.main(args);
+//		TeamDeal.main(args);
+
+		Insert_CrawlerDeal_500MixMatch_New.main(args);
 
 //		System.out.println("run");
 	}

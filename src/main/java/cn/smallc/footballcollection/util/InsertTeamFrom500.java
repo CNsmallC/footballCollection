@@ -1,30 +1,24 @@
-package cn.smallc.footballcollection.extractor.tag;
+package cn.smallc.footballcollection.util;
 
-import cn.smallc.footballcollection.biz.LeagueTypeBiz;
-import cn.smallc.footballcollection.entity.LeagueType;
 import cn.smallc.footballcollection.entity.Team;
 import cn.smallc.footballcollection.entity.enums.Em_TeamType;
+import cn.smallc.footballcollection.extractor.tag.TeamDeal;
 import cn.smallc.footballcollection.support.SharedRepositoryFactory;
-import cn.smallc.footballcollection.util.GetDoc;
-import cn.smallc.footballcollection.util.SC_IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jsoup.HttpStatusException;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.net.SocketTimeoutException;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Author smallC
- * @Date 2018/9/11
+ * @Date 2018/9/17
  * @Description
  */
-public class TeamDeal {
+public class InsertTeamFrom500 {
 
     public static Logger logger;
 
@@ -34,12 +28,19 @@ public class TeamDeal {
     }
 
 
-    public static void main(String[] args) throws Exception {
-        getLeagueMap("http://liansai.500.com/");
 
+    //  最后一个team的地址: http://liansai.500.com/team/10898
+    public static void main(String[] args) throws Exception {
+
+//        getLeagueMap("http://liansai.500.com/");
+
+
+
+
+
+//        failInsertIndex();
 
 //        insertAllTeam();
-
     }
 
 
@@ -65,7 +66,6 @@ public class TeamDeal {
         int successCount = 0;
         int nothaveCount = 0;
         int failCount = 0;
-        int updateCount = 0;
 
         Date date = new Date();
 
@@ -79,8 +79,8 @@ public class TeamDeal {
             }
         });
 
-        for (int index = 647;index<=647;index++){
-//        for (String index:teamIndexList){
+//        for (int index = 2001;index<=11000;index++){
+        for (String index:teamIndexList){
             try {
                 Team team = new Team();
 
@@ -96,7 +96,7 @@ public class TeamDeal {
 
                 if (fullName==null||fullName.equals("")||nickName==null||nickName.equals("")){
                     logger.info(date.getTime()+"\t没有插入成功\t" + index);
-                    nothaveCount = ++nothaveCount;
+                    nothaveCount = nothaveCount++;
                     continue;
                 }
 
@@ -126,29 +126,20 @@ public class TeamDeal {
                     SharedRepositoryFactory.getTeamRepository().insertTeam(team);
                     System.out.println("存进去啦!");
                     logger.info(date.getTime()+"\t插入成功\t" + index);
-                    successCount=++successCount;
-                }else if(dateBaseTeam.getNickName_C()==null||"".equals(dateBaseTeam.getNickName_C())){
-                    dateBaseTeam.setNickName_C(team.getNickName_C().trim());
-
-                    SharedRepositoryFactory.getTeamRepository().update(dateBaseTeam);
-
-                    System.out.println("更新啦!");
-                    logger.info(date.getTime()+"\t更新成功\t" + index);
-                    updateCount=++updateCount;
+                    successCount=successCount++;
                 }
 
                 System.out.println("全名:" + fullName + "\t简称:" + nickName + "\t国家:" + country);
             }catch (Exception e){
                 e.printStackTrace();
                 logger.info(date.getTime()+"\t直接爆炸啦!!!!!!!!!\t" + index);
-                failCount=++failCount;
+                failCount=failCount++;
             }
         }
 
         System.out.println("存入成功的数量:"+successCount);
         System.out.println("存入失败的数量:"+failCount);
         System.out.println("没有账号的数量:"+nothaveCount);
-        System.out.println("更新账号的数量:"+updateCount);
 
 
 
@@ -180,7 +171,7 @@ public class TeamDeal {
 
         try {
             Elements elements = doc.select("div[class=lallrace_main] ul[class=lallrace_main_list clearfix] div[class=lallrace_pop_in] a");
-            elements.addAll(doc.select("table[class=lrace_bei] a"));
+
 //        所有联赛地址
             List<String> stringList = elements.eachAttr("abs:href");
 
