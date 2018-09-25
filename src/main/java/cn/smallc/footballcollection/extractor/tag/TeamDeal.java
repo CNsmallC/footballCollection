@@ -37,6 +37,9 @@ public class TeamDeal {
     public static void main(String[] args) throws Exception {
         getLeagueMap("http://liansai.500.com/");
 
+//        Document leagueURL = GetDoc.getdoc4Chrome("http://liansai.500.com/zuqiu-4838/", 3000, 0, 2);
+
+
 
 //        insertAllTeam();
 
@@ -175,31 +178,50 @@ public class TeamDeal {
 
     }
 
-    private static List<String[]> getLeagueMap(String url) {
+    private static void getLeagueMap(String url) {
         Document doc = GetDoc.getdoc4Chrome(url, 3000, 0, 2);
 
         try {
             Elements elements = doc.select("div[class=lallrace_main] ul[class=lallrace_main_list clearfix] div[class=lallrace_pop_in] a");
             elements.addAll(doc.select("table[class=lrace_bei] a"));
-//        所有联赛地址
-            List<String> stringList = elements.eachAttr("abs:href");
 
-            List<String[]> leagueTypes = new ArrayList<>();
+            List<LeagueType> leagueTypes = new ArrayList<>();
 
             elements.stream().forEach(m->{
+                LeagueType leagueType = new LeagueType();
 
-                String[] strs = new String[]{m.text().trim(),m.attr("abs:href") + "teams/"};
+                String[] strs = new String[]{m.text().trim(),m.attr("abs:href")};
+
+                leagueType.setNickName(strs[0]);
 
                 System.out.println(strs[0]+","+strs[1]);
 
-                leagueTypes.add(strs);
+                //判断数据库nickname有没有重复,没有就入库
+                LeagueType DBLeagueType = SharedRepositoryFactory.getLeagueTypeRepository().getByNickName(strs[0]);
+                if (DBLeagueType!=null){
+
+                    try {
+                        Document leagueURL = GetDoc.getdoc4Chrome(strs[1], 3000, 0, 2);
+                        String string = leagueURL.select("title").text();
+                        String fullName = string.split("】")[0].split("_")[2];
+
+                        leagueType.setLeagueName(fullName);
+
+                        leagueTypes.add(leagueType);
+
+                        System.out.println(leagueType.getNickName());
+                    }catch (Exception e){
+                        logger.info(leagueType.getNickName()+"\t没有存入成功"+"\t"+strs[1]);
+                    }
+                }
+
+
             });
 
-            return leagueTypes;
-        }catch (NullPointerException e){
-            getLeagueMap(url);
-        }
+            SharedRepositoryFactory.getLeagueTypeRepository().batchInsert(leagueTypes);
 
-        return null;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

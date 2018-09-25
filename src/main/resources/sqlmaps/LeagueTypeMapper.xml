@@ -11,11 +11,17 @@
     </select>
 
     <insert id="batchInsert" parameterType="list">
-        INSERT INTO tb_leaguetype (leagueName,nickName_E)
+        INSERT INTO tb_leaguetype (leagueName,nickName)
         VALUES
         <foreach collection="list" item="item" separator=",">
-            (#{item.leagueName},#{item.nickName_E})
+            (#{item.leagueName},#{item.nickName})
         </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="LeagueType">
+        INSERT INTO tb_leaguetype (leagueName,nickName)
+        VALUES
+        (#{leagueTyp.leagueName},#{leagueTyp.nickName})
     </insert>
 
 </mapper>
