@@ -22,7 +22,7 @@ public class FootballCollectionApplication implements CommandLineRunner {
 
 //		TeamDeal.main(args);
 
-		TeamDeal.main(args);
+		Insert_CrawlerDeal_500MixMatch_New.main(args);
 
 //		System.out.println("run");
 	}

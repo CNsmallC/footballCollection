@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.smallc.footballcollection.repository.IScoreRepository">
+
+
+    <insert id="batchInsert" parameterType="list">
+		Insert INTO tb_score (playType,score_Odds,matchCode)
+        VALUES
+		<foreach collection="list" separator="," item="item" index="index">
+            (#{item.playType},#{item.score_Odds},#{item.matchCode})
+        </foreach>
+    </insert>
+
+    <select id="getByMatchID" parameterType="Integer" resultType="Score">
+        SELECT * FROM tb_score WHERE matchID = #{value}
+    </select>
+
+    <delete id="deleteScoresByMatchCode" parameterType="list">
+        DELETE FROM tb_score WHERE matchCode IN
+        <foreach collection="matchCode" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

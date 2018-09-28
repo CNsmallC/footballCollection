@@ -3,8 +3,25 @@
 <mapper namespace="cn.smallc.footballcollection.repository.IMatchRepository">
 
 
-    <select id="insert" parameterType="Match">
-		Insert INTO tb_match (homeTeamID,awayTeamID,leagueTypeID,matchTime,todayMatchID,isHot)
-		VALUES (#{homeTeam.ID},#{awayTeam.ID},#{leagueType.ID},#{matchTime},#{todayMatchID},#{isHot})
+    <insert id="insert" parameterType="Match">
+        <selectKey resultType="Integer" order="AFTER" keyProperty="ID">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+		Insert INTO tb_match (homeTeamID,awayTeamID,leagueTypeID,matchTime,endBuyTime,todayMatchID,isHot,matchCode,rq)
+		VALUES (#{homeTeam.ID},#{awayTeam.ID},#{leagueType.ID},#{matchTime},#{endBuyTime},#{todayMatchID},#{isHot},#{matchCode},#{rq})
+    </insert>
+
+    <select id="getAllMatchCode" parameterType="Match" resultType="String">
+        SELECT matchCode FROM tb_match
     </select>
+
+    <insert id="batchInsert" parameterType="list" useGeneratedKeys="true" keyProperty="ID">
+        Insert INTO tb_match (homeTeamID,awayTeamID,leagueTypeID,matchTime,endBuyTime,todayMatchID,isHot,matchCode,rq)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+            (#{item.homeTeam.ID},#{item.awayTeam.ID},#{item.leagueType.ID},#{item.matchTime},#{item.endBuyTime}
+            ,#{item.todayMatchID},#{item.isHot},#{item.matchCode},#{item.rq})
+        </foreach>
+    </insert>
+
 </mapper>

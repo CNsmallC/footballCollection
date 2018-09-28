@@ -9,7 +9,10 @@ public class Match  implements IAggregateRoot {
 
     private int ID;
     private LeagueType leagueType;
+    //比赛时间
     private Date matchTime;
+    //最后投注时间
+    private Date endBuyTime;
     private int todayMatchID;
     private boolean isHot;
     //比赛时间_主队_客队 的 MD5加密
@@ -21,25 +24,33 @@ public class Match  implements IAggregateRoot {
 
     //让球
     private int rq;
+    //比分玩法赔率list
+    private List<Score> scores;
 
     @Override
     public String toString() {
-        return "Match{" +
-                "ID=" + ID +
-                ", leagueType=" + leagueType +
-                ", matchTime=" + matchTime +
-                ", todayMatchID=" + todayMatchID +
-                ", isHot=" + isHot +
-                ", matchCode='" + matchCode + '\'' +
-                ", homeTeam=" + homeTeam +
-                ", awayTeam=" + awayTeam +
-                ", rq=" + rq +
-                ", scores=" + scores +
+         return "Match{" +
+                "\nID=" + ID +
+                "\n, leagueType=" + leagueType +
+                "\n, matchTime=" + matchTime +
+                "\n, endBuyTime=" + endBuyTime +
+                "\n, todayMatchID=" + todayMatchID +
+                "\n, isHot=" + isHot +
+                "\n, matchCode=" + matchCode +
+                "\n, homeTeam=" + homeTeam.toString() +
+                "\n, awayTeam=" + awayTeam.toString() +
+                "\n, rq=" + rq +
+                "\n, scores=" + scores +
                 '}';
     }
 
-    //比分玩法赔率list
-    private List<Score> scores;
+    public Date getEndBuyTime() {
+        return endBuyTime;
+    }
+
+    public void setEndBuyTime(Date endBuyTime) {
+        this.endBuyTime = endBuyTime;
+    }
 
     public int getID() {
         return ID;

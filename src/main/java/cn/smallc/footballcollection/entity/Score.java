@@ -10,7 +10,16 @@ public class Score implements IAggregateRoot {
     private Em_PlayType playType;
 //    比分和赔率的特殊字符串  比分|赔率,比分|赔率...
     private String score_Odds;
-    private Match matchID;
+    private int matchID;
+    private String matchCode;
+
+    public String getMatchCode() {
+        return matchCode;
+    }
+
+    public void setMatchCode(String matchCode) {
+        this.matchCode = matchCode;
+    }
 
     public int getID() {
         return ID;
@@ -36,11 +45,11 @@ public class Score implements IAggregateRoot {
         this.score_Odds = score_Odds;
     }
 
-    public Match getMatchID() {
+    public int getMatchID() {
         return matchID;
     }
 
-    public void setMatchID(Match matchID) {
+    public void setMatchID(int matchID) {
         this.matchID = matchID;
     }
 }

@@ -2,14 +2,16 @@ package cn.smallc.footballcollection.repository;
 
 import cn.smallc.footballcollection.common.db.IRepository;
 import cn.smallc.footballcollection.entity.Match;
+import cn.smallc.footballcollection.entity.Score;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
-public interface IMatchRepository extends IRepository<Match>{
+public interface IScoreRepository extends IRepository<Score>{
+    List<Score> getByMatchID(int matchID);
 
-    List<String> getAllMatchCode();
+    void deleteScoresByMatchCode(@Param("matchCode")List<String> matchCode);
 
 }

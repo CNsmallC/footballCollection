@@ -1,7 +1,9 @@
 package cn.smallc.footballcollection.support;
 
+import cn.smallc.footballcollection.entity.Score;
 import cn.smallc.footballcollection.repository.LeagueTypeRepository;
 import cn.smallc.footballcollection.repository.MatchRepository;
+import cn.smallc.footballcollection.repository.ScoreRepository;
 import cn.smallc.footballcollection.repository.TeamRepository;
 import cn.smallc.footballcollection.repository.page.PageRepository;
 import cn.smallc.footballcollection.repository.visited.VisitedRepository;
@@ -27,6 +29,11 @@ public class SharedRepositoryFactory {
     private static MatchRepository matchRepository;
 
     /**
+     * 联赛分类仓储
+     */
+    private static ScoreRepository ScoreRepository;
+
+    /**
      * 去重仓储
      */
     private static VisitedRepository visitedRepository;
@@ -35,6 +42,15 @@ public class SharedRepositoryFactory {
      * 联赛分类仓储
      */
     private static TeamRepository teamRepository;
+
+    public static ScoreRepository getScoreRepository() {
+        return ScoreRepository;
+    }
+
+    @Autowired
+    public void setScoreRepository(ScoreRepository scoreRepository) {
+        ScoreRepository = scoreRepository;
+    }
 
     public static VisitedRepository getVisitedRepository() {
         return visitedRepository;

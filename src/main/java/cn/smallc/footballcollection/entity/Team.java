@@ -15,6 +15,16 @@ public class Team implements IAggregateRoot {
     private Em_TeamType teamType;
     private LeagueType leagueType;
 
+    @Override
+    public String toString() {
+        return "Team{" +
+                "ID=" + ID +
+                ", teamName_C='" + teamName_C + '\'' +
+                ", nickName_C='" + nickName_C + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", teamType=" + teamType +
+                '}';
+    }
 
     public String getNickName_C() {
         return nickName_C;

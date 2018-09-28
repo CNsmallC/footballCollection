@@ -14,6 +14,10 @@
         SELECT * FROM tb_team WHERE teamName_C = #{teamName_C}
     </select>
 
+    <select id="findByNickName_C" parameterType="String" resultType="Team">
+        SELECT * FROM tb_team WHERE teamName_C = #{nickName_C}
+    </select>
+
     <update id="update" parameterType="Team">
         UPDATE tb_team SET
         teamName_C = #{teamName_C},teamName_E=#{teamName_E},nickName_C=#{nickName_C},nickName_E=#{nickName_E},countryName=#{countryName},teamType=#{teamType}

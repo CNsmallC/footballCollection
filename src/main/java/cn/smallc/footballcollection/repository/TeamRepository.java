@@ -31,4 +31,8 @@ public class TeamRepository extends Repository<Team,ITeamRepository> {
         return repository.findByTeamName_C(teamName_C);
     }
 
+    public Team findByNickName_C(String nickName_C){
+        return repository.findByNickName_C(nickName_C);
+    }
+
 }

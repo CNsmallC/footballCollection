@@ -198,7 +198,7 @@ public class TeamDeal {
 
                 //判断数据库nickname有没有重复,没有就入库
                 LeagueType DBLeagueType = SharedRepositoryFactory.getLeagueTypeRepository().getByNickName(strs[0]);
-                if (DBLeagueType!=null){
+                if (DBLeagueType==null){
 
                     try {
                         Document leagueURL = GetDoc.getdoc4Chrome(strs[1], 3000, 0, 2);
