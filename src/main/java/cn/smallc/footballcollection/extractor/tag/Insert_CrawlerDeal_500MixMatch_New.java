@@ -77,7 +77,7 @@ public class Insert_CrawlerDeal_500MixMatch_New {
         List<Match> matchList = new ArrayList<>();
         //todo 内容装载
         if (elementNotBegin.size()==elementAllMore.size()){
-            matchList = detailMatchLoad(elementAllNormal,elementAllMore);
+            matchList = detailMatchLoad(elementNotBegin,elementAllMore);
         }else {
 
         }
