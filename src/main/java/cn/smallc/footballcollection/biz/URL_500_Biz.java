@@ -1,7 +1,5 @@
-package cn.smallc.footballcollection.extractor.tag;
+package cn.smallc.footballcollection.biz;
 
-import cn.smallc.footballcollection.biz.MatchBiz;
-import cn.smallc.footballcollection.biz.TeamBiz;
 import cn.smallc.footballcollection.entity.LeagueType;
 import cn.smallc.footballcollection.entity.Match;
 import cn.smallc.footballcollection.entity.Score;
@@ -10,8 +8,6 @@ import cn.smallc.footballcollection.entity.enums.Em_PlayType;
 import cn.smallc.footballcollection.support.SharedRepositoryFactory;
 import cn.smallc.footballcollection.util.GetDoc;
 import cn.smallc.footballcollection.util.MD5;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -21,80 +17,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 /**
  * @Author smallC
- * @Date 2018/9/17
+ * @Date 2018/10/11
  * @Description
  */
-public class Insert_CrawlerDeal_500MixMatch_New {
 
-    public static Logger logger;
+//500业务处理类
+public class URL_500_Biz {
 
-    static {
-        System.setProperty("log4j2Filename","500insertMatch_new_log");
-        logger = LogManager.getLogger(TeamDeal.class);
-    }
-//  http://live.500.com/?e=2018-09-01   比分赛果
-    public static void main(String[] args) {
-
-        Insert_CrawlerDeal_500MixMatch();
-
-    }
-
-    public static void Insert_CrawlerDeal_500MixMatch() {
-        //todo 抓取网页信息
-//        String url = "http://trade.500.com/jczq/index.php?playid=312";
-        String url = "http://trade.500.com/jczq/index.php?playid=312&g=2";
-
-        Document doc = GetDoc.getdoc(url,2000,0,2);
-
-        //所有信息
-        Elements elements = doc.select("div[class=bet-main bet-main-dg]");
-        //所有比赛的行
-        Elements elementAllNormal = elements.select("tbody").select("tr[data-infomatchid]");
-
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        //过滤已经结束的比赛,因为一结束的比赛,更多比赛的标签会变化
-        Elements elementNotBegin = new Elements( elementAllNormal.stream().filter(normal -> {
-            try {
-                return new Date().getTime() < sdf1.parse(normal.attr("data-buyendtime")).getTime();
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }).collect(Collectors.toList()));
-
-        Elements elementAllMore = elements.select("tbody").select("tr[data-infomatchid] + tr[class=bet-more-wrap hide]");
-
-
-        System.out.println(elementNotBegin.size() + "\t" + elementAllMore.size());
-
-
-        List<Match> matchList = new ArrayList<>();
-        //todo 内容装载
-        if (elementNotBegin.size()==elementAllMore.size()){
-            matchList = detailMatchLoad(elementNotBegin,elementAllMore);
-        }else {
-
-        }
-
-
-        Date date = null;
-
-
-        //todo 内容存储
-        MatchBiz.matchesDeal(matchList);
-
-    }
-
-
-
-
-    private static List<Match> detailMatchLoad(Elements elementAllNormal ,Elements elementAllMore){
+    public static List<Match> detailMatchLoad(Elements elementAllNormal , Elements elementAllMore){
         List<Match> matchList = new ArrayList<>();
 
         for (int index = 0;index < elementAllNormal.size();index++){
@@ -109,8 +42,8 @@ public class Insert_CrawlerDeal_500MixMatch_New {
                 Element elementMore = elementAllMore.get(index);
 
                 //比赛时间
-                String matchDayStr = elementAllNormal.attr("data-matchdate");
-                String matchTimeStr = elementAllNormal.attr("data-matchtime");
+                String matchDayStr = elementNormal.attr("data-matchdate");
+                String matchTimeStr = elementNormal.attr("data-matchtime");
 
                 SimpleDateFormat sdfMatchDate = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date matchDate = null;
@@ -124,7 +57,7 @@ public class Insert_CrawlerDeal_500MixMatch_New {
                 match.setMatchTime(matchDate);
 
                 //最后购买时间
-                String matchEndBuyStr = elementAllNormal.attr("data-buyendtime");
+                String matchEndBuyStr = elementNormal.attr("data-buyendtime");
 
                 SimpleDateFormat sdfEndBuyDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date endBuyDate = null;
@@ -184,7 +117,16 @@ public class Insert_CrawlerDeal_500MixMatch_New {
                     match.setHomeTeam(homeTeam);
                     match.setAwayTeam(awaysTeam);
 
-                }//玩法赔率,胜平负
+                }
+//              判断比赛是否有赛果
+                if (new Date().getTime() > matchDate.getTime()
+                        && !elementNormal.select("div[class=team] i[class=team-vs team-bf]").isEmpty()
+                        && !"VS".equals(elementNormal.select("div[class=team] i[class=team-vs team-bf]").text())){
+
+                }
+
+
+                //玩法赔率,胜平负
                 if (elementNormal.select("td[class=td td-betbtn]")!=null){
                     Score spf_score = new Score();
                     spf_score.setPlayType(Em_PlayType.NORMAL);
@@ -223,7 +165,8 @@ public class Insert_CrawlerDeal_500MixMatch_New {
 
                 match.setScores(scoreList);
 
-                String matchCode_MD5 = MD5.GetMD5Code(String.valueOf(matchDate.getTime()) + "_" + match.getHomeTeam() + "_" + match.getAwayTeam());
+                String matchCode_MD5 = MD5.GetMD5Code(String.valueOf(matchDate.getTime()) + "_"
+                        + match.getHomeTeam().getTeamName_C() + "_" + match.getAwayTeam().getTeamName_C());
                 match.setMatchCode(matchCode_MD5);
 
                 System.out.println(match.toString());
@@ -254,14 +197,14 @@ public class Insert_CrawlerDeal_500MixMatch_New {
 
 
 
-
+//  更多玩法数据组装
     private static void morePlay(List<Score> scoreList,Element elementMore){
         if (elementMore.select("table[class=bet-more-tb]")!=null){
 
             //玩法赔率,半全场
             if (elementMore.select("table[class=bet-more-tb]").select("p[data-type=bqc]")!=null){
                 Score spf_score = new Score();
-                spf_score.setPlayType(Em_PlayType.ALL_GOAL);
+                spf_score.setPlayType(Em_PlayType.HALF_ALL);
 
                 Elements spf = elementMore.select("table[class=bet-more-tb]").select("p[data-type=bqc]");
 
@@ -354,6 +297,5 @@ public class Insert_CrawlerDeal_500MixMatch_New {
 
         }
     }
-
 
 }

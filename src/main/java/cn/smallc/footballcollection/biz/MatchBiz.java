@@ -5,13 +5,14 @@ import cn.smallc.footballcollection.support.SharedRepositoryFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Author smallC
  * @Date 2018/9/27
  * @Description
  */
+
+//赛事通用业务类
 public class MatchBiz {
 
     public static void matchesDeal(List<Match> matches){

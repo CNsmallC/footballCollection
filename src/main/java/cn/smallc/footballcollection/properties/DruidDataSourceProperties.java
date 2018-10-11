@@ -3,9 +3,7 @@ package cn.smallc.footballcollection.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by daixinle on 2016-12-21.
- */
+
 @Component
 @ConfigurationProperties(prefix = "druidDataSource")
 public class DruidDataSourceProperties {
