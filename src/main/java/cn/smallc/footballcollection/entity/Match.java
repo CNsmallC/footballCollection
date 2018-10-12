@@ -26,8 +26,18 @@ public class Match  implements IAggregateRoot {
     private int rq;
     //比分玩法赔率list
     private List<Score> scores;
+    //是否有赛果
+    private boolean hasMatchResult;
     //赛果
     private MatchResult matchResult;
+
+    public boolean isHasMatchResult() {
+        return hasMatchResult;
+    }
+
+    public void setHasMatchResult(boolean hasMatchResult) {
+        this.hasMatchResult = hasMatchResult;
+    }
 
     public MatchResult getMatchResult() {
         return matchResult;

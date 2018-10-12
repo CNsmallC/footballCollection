@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.smallc.footballcollection.repository.IMatchResultRepository">
+
+
+    <insert id="batchInsert" parameterType="list">
+        Insert INTO tb_matchresult (matchCode,endScore,endNormal,endRQ_Normal,halfAndAll,allGoal,isWinOther,isDrawOther,isLoseOther)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+            (#{item.matchCode},#{item.endScore},#{item.endNormal},#{item.endRQ_Normal},#{item.halfAndAll},#{item.allGoal}
+            ,#{item.isWinOther},#{item.isDrawOther},#{item.isLoseOther})
+        </foreach>
+    </insert>
+
+    <delete id="deleteMatchResultByMatchCode" parameterType="list">
+        DELETE FROM tb_matchresult WHERE matchCode IN
+        <foreach collection="matchCodes" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

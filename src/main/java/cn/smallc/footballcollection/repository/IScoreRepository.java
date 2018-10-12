@@ -12,6 +12,6 @@ import java.util.List;
 public interface IScoreRepository extends IRepository<Score>{
     List<Score> getByMatchID(int matchID);
 
-    void deleteScoresByMatchCode(@Param("matchCode")List<String> matchCode);
+    void deleteScoresByMatchCode(@Param("matchCodes")List<String> matchCodes);
 
 }

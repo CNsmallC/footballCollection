@@ -1,9 +1,6 @@
 package cn.smallc.footballcollection.biz;
 
-import cn.smallc.footballcollection.entity.LeagueType;
-import cn.smallc.footballcollection.entity.Match;
-import cn.smallc.footballcollection.entity.Score;
-import cn.smallc.footballcollection.entity.Team;
+import cn.smallc.footballcollection.entity.*;
 import cn.smallc.footballcollection.entity.enums.Em_PlayType;
 import cn.smallc.footballcollection.support.SharedRepositoryFactory;
 import cn.smallc.footballcollection.util.GetDoc;
@@ -33,6 +30,7 @@ public class URL_500_Biz {
         for (int index = 0;index < elementAllNormal.size();index++){
 
             try {
+
                 Match match = new Match();
                 List<Score> scoreList = new ArrayList<>();
 
@@ -40,6 +38,8 @@ public class URL_500_Biz {
                 Element elementNormal = elementAllNormal.get(index);
                 //更多玩法信息
                 Element elementMore = elementAllMore.get(index);
+
+
 
                 //比赛时间
                 String matchDayStr = elementNormal.attr("data-matchdate");
@@ -118,11 +118,30 @@ public class URL_500_Biz {
                     match.setAwayTeam(awaysTeam);
 
                 }
+
+                //matchCode
+                String matchCode_MD5 = MD5.GetMD5Code(String.valueOf(matchDate.getTime()) + "_"
+                        + match.getHomeTeam().getTeamName_C() + "_" + match.getAwayTeam().getTeamName_C());
+                match.setMatchCode(matchCode_MD5);
+
 //              判断比赛是否有赛果
                 if (new Date().getTime() > matchDate.getTime()
                         && !elementNormal.select("div[class=team] i[class=team-vs team-bf]").isEmpty()
                         && !"VS".equals(elementNormal.select("div[class=team] i[class=team-vs team-bf]").text())){
+                    MatchResult matchResult = new MatchResult();
 
+                    //赛果标志为 true
+                    match.setHasMatchResult(true);
+
+                    matchResult.setMatchCode(matchCode_MD5);
+                    String endScore = elementNormal.select("div[class=team] i[class=team-vs team-bf]").text();
+                    matchResult.setEndScore(endScore);
+                    int homeTeamScore = Integer.valueOf(endScore.split(":")[0]);
+                    int awayTeamScore = Integer.valueOf(endScore.split(":")[1]);
+                    int allGoal = homeTeamScore + awayTeamScore;
+                    matchResult.setAllGoal(allGoal);
+
+                    match.setMatchResult(matchResult);
                 }
 
 
@@ -138,6 +157,11 @@ public class URL_500_Biz {
                     String spfString = "3|"+spf.select("p[data-type=nspf]").select("p[data-value=3]").attr("data-sp")
                             +",1|"+spf.select("p[data-type=nspf]").select("p[data-value=1]").attr("data-sp")
                             +",0|"+spf.select("p[data-type=nspf]").select("p[data-value=0]").attr("data-sp");
+
+                    //如果有赛果,加入胜平负赛果
+                    if (match.isHasMatchResult() && !spf.select("p[class=betbtn betbtn-ok]").isEmpty()){
+                        match.getMatchResult().setEndNormal(spf.select("p[class=betbtn betbtn-ok]").attr("data-value"));
+                    }
 
                     spf_score.setScore_Odds(spfString);
 
@@ -155,19 +179,22 @@ public class URL_500_Biz {
                             ",1|"+spf.select("p[data-type=spf]").select("p[data-value=1]").attr("data-sp")
                             +",0|"+spf.select("p[data-type=spf]").select("p[data-value=1]").attr("data-sp");
 
+                    //如果有赛果,加入胜平负赛果
+                    if (match.isHasMatchResult() && !spf.select("p[class=betbtn betbtn-ok]").isEmpty()){
+                        match.getMatchResult().setEndNormal(spf.select("p[class=betbtn betbtn-ok]").attr("data-value"));
+                    }
+
                     rqspf_score.setScore_Odds(rqspfString);
                     scoreList.add(rqspf_score);
 
                     System.out.println("让球胜平负赔率String:"+rqspfString);
                 }
                 //更多玩法
-                morePlay(scoreList,elementMore);
+                morePlay(match,scoreList,elementMore);
 
-                match.setScores(scoreList);
+//                match.setScores(scoreList);
 
-                String matchCode_MD5 = MD5.GetMD5Code(String.valueOf(matchDate.getTime()) + "_"
-                        + match.getHomeTeam().getTeamName_C() + "_" + match.getAwayTeam().getTeamName_C());
-                match.setMatchCode(matchCode_MD5);
+
 
                 System.out.println(match.toString());
 
@@ -187,18 +214,14 @@ public class URL_500_Biz {
                 e.printStackTrace();
                 continue;
             }
-
-
         }
-
         return matchList;
-
     }
 
 
 
 //  更多玩法数据组装
-    private static void morePlay(List<Score> scoreList,Element elementMore){
+    private static void morePlay(Match match, List<Score> scoreList,Element elementMore){
         if (elementMore.select("table[class=bet-more-tb]")!=null){
 
             //玩法赔率,半全场
@@ -217,6 +240,10 @@ public class URL_500_Biz {
                         + ",03|"+spf.select("p[data-value=0-3]").attr("data-sp")
                         + ",01|"+spf.select("p[data-value=0-1]").attr("data-sp")
                         + ",00|"+spf.select("p[data-value=0-0]").attr("data-sp");
+
+                if(match.isHasMatchResult() && !spf.select("p[class=sbetbtn  sbetbtn-ok]").isEmpty()){
+                    match.getMatchResult().setHalfAndAll(spf.select("p[class=sbetbtn  sbetbtn-ok]").attr("data-value").replace("-",""));
+                }
 
                 spf_score.setScore_Odds(spfString);
                 scoreList.add(spf_score);
@@ -294,6 +321,8 @@ public class URL_500_Biz {
 
                 System.out.println("进球数赔率String:"+jqsString);
             }
+
+            match.setScores(scoreList);
 
         }
     }

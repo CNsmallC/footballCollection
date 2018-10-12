@@ -15,8 +15,8 @@ public class ScoreRepository extends Repository<Score,IScoreRepository> {
         return repository.getByMatchID(matchID);
     }
 
-    public void deleteScoresByMatchCode(@Param("matchCode")List<String> matchCode){
-        repository.deleteScoresByMatchCode(matchCode);
+    public void deleteScoresByMatchCode(List<String> matchCodes){
+        repository.deleteScoresByMatchCode(matchCodes);
     }
 
 }

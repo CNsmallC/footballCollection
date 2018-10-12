@@ -16,11 +16,11 @@
     </select>
 
     <insert id="batchInsert" parameterType="list" useGeneratedKeys="true" keyProperty="ID">
-        Insert INTO tb_match (homeTeamID,awayTeamID,leagueTypeID,matchTime,endBuyTime,todayMatchID,isHot,matchCode,rq)
+        Insert INTO tb_match (homeTeamID,awayTeamID,leagueTypeID,matchTime,endBuyTime,todayMatchID,isHot,matchCode,rq,hasMatchResult)
 		VALUES
 		<foreach collection="list" item="item" index="index" separator=",">
             (#{item.homeTeam.ID},#{item.awayTeam.ID},#{item.leagueType.ID},#{item.matchTime},#{item.endBuyTime}
-            ,#{item.todayMatchID},#{item.isHot},#{item.matchCode},#{item.rq})
+            ,#{item.todayMatchID},#{item.isHot},#{item.matchCode},#{item.rq},#{item.hasMatchResult})
         </foreach>
     </insert>
 

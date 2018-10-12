@@ -1,11 +1,13 @@
 package cn.smallc.footballcollection.entity;
 
+import cn.smallc.footballcollection.common.ientity.IAggregateRoot;
+
 /**
  * @Author smallC
  * @Date 2018/10/11
  * @Description
  */
-public class MatchResult {
+public class MatchResult implements IAggregateRoot {
 
     //比赛码
     private String matchCode;
@@ -29,7 +31,7 @@ public class MatchResult {
     //根据比分判断是否是胜负平其他
     private void isOtherEnd(String endScore){
         int homeTeamScore = Integer.valueOf(endScore.split(":")[0]);
-        int awayTeamScore = Integer.valueOf(endScore.split(":")[0]);
+        int awayTeamScore = Integer.valueOf(endScore.split(":")[1]);
 
         if ((homeTeamScore > awayTeamScore && homeTeamScore >= 6)
                 || (homeTeamScore==4 && awayTeamScore==3)

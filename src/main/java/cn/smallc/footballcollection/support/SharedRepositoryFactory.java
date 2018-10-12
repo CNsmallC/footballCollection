@@ -1,10 +1,8 @@
 package cn.smallc.footballcollection.support;
 
+import cn.smallc.footballcollection.entity.MatchResult;
 import cn.smallc.footballcollection.entity.Score;
-import cn.smallc.footballcollection.repository.LeagueTypeRepository;
-import cn.smallc.footballcollection.repository.MatchRepository;
-import cn.smallc.footballcollection.repository.ScoreRepository;
-import cn.smallc.footballcollection.repository.TeamRepository;
+import cn.smallc.footballcollection.repository.*;
 import cn.smallc.footballcollection.repository.page.PageRepository;
 import cn.smallc.footballcollection.repository.visited.VisitedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,20 @@ public class SharedRepositoryFactory {
      * 联赛分类仓储
      */
     private static TeamRepository teamRepository;
+
+    /**
+     * 赛果仓储
+     */
+    private static MatchResultRepository matchResultRepository;
+
+    public static MatchResultRepository getMatchResultRepository() {
+        return matchResultRepository;
+    }
+
+    @Autowired
+    public void setMatchResultRepository(MatchResultRepository matchResultRepository) {
+        SharedRepositoryFactory.matchResultRepository = matchResultRepository;
+    }
 
     public static ScoreRepository getScoreRepository() {
         return ScoreRepository;

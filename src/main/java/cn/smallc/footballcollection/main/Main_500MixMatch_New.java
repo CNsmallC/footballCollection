@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static cn.smallc.footballcollection.biz.URL_500_Biz.detailMatchLoad;
 
 
 /**

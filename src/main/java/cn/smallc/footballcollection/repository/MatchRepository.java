@@ -2,6 +2,7 @@ package cn.smallc.footballcollection.repository;
 
 import cn.smallc.footballcollection.common.db.Repository;
 import cn.smallc.footballcollection.entity.Match;
+import cn.smallc.footballcollection.entity.MatchResult;
 import cn.smallc.footballcollection.entity.Score;
 import cn.smallc.footballcollection.support.SharedRepositoryFactory;
 import org.apache.ibatis.annotations.Param;
@@ -33,13 +34,23 @@ public class MatchRepository extends Repository<Match,IMatchRepository> {
 
         List<Score> scores = new ArrayList<>();
 
+        List<MatchResult> matchResults = new ArrayList<>();
+
         matches.stream().forEach(match->{
-            List<Score> one_scores = match.getScores();
-            one_scores.stream().forEach(m->m.setMatchCode(match.getMatchCode()));
-            scores.addAll(one_scores);
+            List<Score> one_score = match.getScores();
+            one_score.stream().forEach(m->m.setMatchCode(match.getMatchCode()));
+            scores.addAll(one_score);
+            //如果有赛果,则添加赛果
+            if (match.isHasMatchResult()){
+                matchResults.add(match.getMatchResult());
+            }
         });
 
         SharedRepositoryFactory.getScoreRepository().batchInsert(scores);
+        //如果有赛果,则添加赛果
+        if (matchResults.size()>=0){
+            SharedRepositoryFactory.getMatchResultRepository().batchInsert(matchResults);
+        }
     }
 
     /**
@@ -52,16 +63,30 @@ public class MatchRepository extends Repository<Match,IMatchRepository> {
 
         List<Score> scores = new ArrayList<>();
 
+        List<MatchResult> matchResults = new ArrayList<>();
+
         matches.stream().forEach(match->{
             List<Score> one_scores = match.getScores();
             one_scores.stream().forEach(m->m.setMatchCode(match.getMatchCode()));
             scores.addAll(one_scores);
+            //如果有赛果,则添加赛果
+            if (match.isHasMatchResult()){
+                matchResults.add(match.getMatchResult());
+            }
         });
 
 //        List<Score> insertScores = matches.stream().flatMap(m->m.getScores().stream()).collect(Collectors.toList());
         SharedRepositoryFactory.getScoreRepository().deleteScoresByMatchCode(deleteMatchCodes);
 
         SharedRepositoryFactory.getScoreRepository().batchInsert(scores);
+
+        //如果有赛果,则添加赛果
+        if (matchResults.size()>=0){
+
+
+            SharedRepositoryFactory.getMatchResultRepository().batchInsert(matchResults);
+        }
+
     }
 
     public List<String> getAllMatchCode(){
