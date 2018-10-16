@@ -12,4 +12,6 @@ public interface IMatchRepository extends IRepository<Match>{
 
     List<String> getAllMatchCode();
 
+    void updateHasMatchResultTrueByMatchCodes(List<String> matchCodes);
+
 }

@@ -62,7 +62,7 @@ public class Main_500MixMatch_New {
         Elements elements = doc.select("div[class=bet-main bet-main-dg]");
 
         //今日比赛处理
-//        dataDeal(elements);
+        dataDeal(elements);
 
 
 
@@ -106,6 +106,7 @@ public class Main_500MixMatch_New {
 
 //            System.out.println(yesterdayElements);
 
+            //昨日比赛处理方法
             dataDeal(yesterdayElements);
 
         }

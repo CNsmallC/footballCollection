@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class MatchResultRepository extends Repository<MatchResult,IMatchResultRepository> {
 
-
+    public void deleteMatchResultByMatchCode(List<String> matchCodes){
+        repository.deleteMatchResultByMatchCode(matchCodes);
+    }
 
 }

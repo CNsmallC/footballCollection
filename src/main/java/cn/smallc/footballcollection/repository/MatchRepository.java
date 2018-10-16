@@ -5,7 +5,6 @@ import cn.smallc.footballcollection.entity.Match;
 import cn.smallc.footballcollection.entity.MatchResult;
 import cn.smallc.footballcollection.entity.Score;
 import cn.smallc.footballcollection.support.SharedRepositoryFactory;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +47,7 @@ public class MatchRepository extends Repository<Match,IMatchRepository> {
 
         SharedRepositoryFactory.getScoreRepository().batchInsert(scores);
         //如果有赛果,则添加赛果
-        if (matchResults.size()>=0){
+        if (matchResults.size()>0){
             SharedRepositoryFactory.getMatchResultRepository().batchInsert(matchResults);
         }
     }
@@ -76,13 +75,19 @@ public class MatchRepository extends Repository<Match,IMatchRepository> {
         });
 
 //        List<Score> insertScores = matches.stream().flatMap(m->m.getScores().stream()).collect(Collectors.toList());
-        SharedRepositoryFactory.getScoreRepository().deleteScoresByMatchCode(deleteMatchCodes);
+        SharedRepositoryFactory.getScoreRepository().deleteScoresByMatchCodes(deleteMatchCodes);
 
         SharedRepositoryFactory.getScoreRepository().batchInsert(scores);
 
         //如果有赛果,则添加赛果
-        if (matchResults.size()>=0){
+        if (matchResults.size()>0){
+            List<String> matchResultCodes = new ArrayList<>();
 
+            matchResults.stream().forEach(matchResult -> matchResultCodes.add(matchResult.getMatchCode()));
+            SharedRepositoryFactory.getMatchResultRepository().deleteMatchResultByMatchCode(matchResultCodes);
+
+            //将比赛表中的比赛是否有赛果改成true
+            repository.updateHasMatchResultTrueByMatchCodes(matchResultCodes);
 
             SharedRepositoryFactory.getMatchResultRepository().batchInsert(matchResults);
         }

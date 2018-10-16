@@ -37,6 +37,9 @@ public class FootballCollectionApplication implements CommandLineRunner {
 
 		while (loopflag){
 
+			Long startTime = new Date().getTime();
+
+
 			if ("500New".equals(urlfrom)){
 				Main_500MixMatch_New.main(args);
 			}
@@ -47,7 +50,8 @@ public class FootballCollectionApplication implements CommandLineRunner {
 				System.out.println("wait.......");
 				try {
 				    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    System.out.println(sdf.format(new Date()));
+					Date endTime = new Date();
+                    System.out.println("结束时间:" + sdf.format(endTime) + "\n" + "本次消耗时间:" + (endTime.getTime() - startTime)/1000 + "秒");
 					Thread.sleep(sleeptime);
 
 				} catch (InterruptedException e) {

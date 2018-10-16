@@ -7,8 +7,8 @@
         <selectKey resultType="Integer" order="AFTER" keyProperty="ID">
             SELECT LAST_INSERT_ID();
         </selectKey>
-		Insert INTO tb_match (homeTeamID,awayTeamID,leagueTypeID,matchTime,endBuyTime,todayMatchID,isHot,matchCode,rq)
-		VALUES (#{homeTeam.ID},#{awayTeam.ID},#{leagueType.ID},#{matchTime},#{endBuyTime},#{todayMatchID},#{isHot},#{matchCode},#{rq})
+		Insert INTO tb_match (homeTeamID,awayTeamID,leagueTypeID,matchTime,endBuyTime,todayMatchID,isHot,matchCode,rq,hasMatchResult)
+		VALUES (#{homeTeam.ID},#{awayTeam.ID},#{leagueType.ID},#{matchTime},#{endBuyTime},#{todayMatchID},#{isHot},#{matchCode},#{rq},#{hasMatchResult})
     </insert>
 
     <select id="getAllMatchCode" parameterType="Match" resultType="String">
@@ -23,5 +23,13 @@
             ,#{item.todayMatchID},#{item.isHot},#{item.matchCode},#{item.rq},#{item.hasMatchResult})
         </foreach>
     </insert>
+    
+    <update id="updateHasMatchResultTrueByMatchCodes" parameterType="list">
+        UPDATE tb_match SET hasMatchResult = TRUE
+        WHERE matchCode IN
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
 
 </mapper>

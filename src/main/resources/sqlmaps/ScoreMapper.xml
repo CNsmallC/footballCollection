@@ -15,9 +15,9 @@
         SELECT * FROM tb_score WHERE matchID = #{value}
     </select>
 
-    <delete id="deleteScoresByMatchCode" parameterType="list">
+    <delete id="deleteScoresByMatchCodes" parameterType="list">
         DELETE FROM tb_score WHERE matchCode IN
-        <foreach collection="matchCode" index="index" item="item" separator="," open="(" close=")">
+        <foreach collection="matchCodes" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
     </delete>

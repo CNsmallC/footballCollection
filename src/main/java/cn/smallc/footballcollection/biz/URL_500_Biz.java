@@ -181,7 +181,7 @@ public class URL_500_Biz {
 
                     //如果有赛果,加入胜平负赛果
                     if (match.isHasMatchResult() && !spf.select("p[class=betbtn betbtn-ok]").isEmpty()){
-                        match.getMatchResult().setEndNormal(spf.select("p[class=betbtn betbtn-ok]").attr("data-value"));
+                        match.getMatchResult().setEndRQ_Normal(spf.select("p[class=betbtn betbtn-ok]").attr("data-value"));
                     }
 
                     rqspf_score.setScore_Odds(rqspfString);
